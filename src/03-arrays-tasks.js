@@ -145,8 +145,11 @@ function getStringsLength(arr) {
  *    [ 1, 3, 4, 5 ], 2, 1  => [ 1, 2, 3, 4, 5 ]
  *    [ 1, 'b', 'c'], 'x', 0  => [ 'x', 1, 'b', 'c' ]
  */
-function insertItem(/* arr, item, index */) {
-  throw new Error('Not implemented');
+function insertItem(arr, item, index) {
+  const tail = arr.slice(index);
+  arr.splice(index);
+  arr.push(item);
+  arr.push(...tail);
 }
 
 /**
@@ -516,8 +519,14 @@ function distinct(arr) {
  *    "Poland" => ["Lodz"]
  *   }
  */
-function group(/* array, keySelector, valueSelector */) {
-  throw new Error('Not implemented');
+function group(array, keySelector, valueSelector) {
+  return array.reduce((map, item) => {
+    if (!map.has(keySelector(item))) {
+      map.set(keySelector(item), []);
+    }
+    map[keySelector(item)].push(valueSelector(item));
+    return map;
+  }, new Map());
 }
 
 
